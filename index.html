@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eden Global School – Assembly Election 2026-27</title>
+<style>
+:root{--navy:#0a1628;--gold:#c9a227;--gold-light:#f0d06a;--gold-pale:#fdf4d7;--off:#f8f6f1;--tmid:#4a4a6a;--tlight:#7a7a9a;--border:rgba(201,162,39,0.25);--shadow:0 4px 24px rgba(10,22,40,0.10);--r:16px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--off);color:#1a1a2e;min-height:100vh;}
+
+.hdr{background:var(--navy);text-align:center;position:relative;overflow:hidden;}
+.hdr-inner{position:relative;z-index:2;padding:32px 20px 20px;}
+.hdr-pat{position:absolute;inset:0;z-index:1;background:radial-gradient(circle at 80% 20%,rgba(201,162,39,.12) 0%,transparent 50%),radial-gradient(circle at 20% 80%,rgba(201,162,39,.08) 0%,transparent 40%);}
+.crest{width:64px;height:64px;background:var(--gold);border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;user-select:none;}
+.hdr h1{font-size:clamp(17px,4vw,27px);font-weight:800;color:#fff;}
+.hdr-sub{font-size:clamp(9px,2vw,13px);color:var(--gold-light);margin-top:3px;letter-spacing:2px;text-transform:uppercase;}
+.hdr-div{width:40px;height:3px;background:var(--gold);margin:8px auto;border-radius:2px;}
+.hdr-tag{font-size:12px;color:rgba(255,255,255,.5);max-width:380px;margin:0 auto;}
+.prog-wrap{background:rgba(255,255,255,.08);height:4px;}
+.prog-fill{height:4px;background:var(--gold);transition:width .4s ease;}
+
+.step-ind{background:var(--navy);padding:8px 14px;display:flex;align-items:center;justify-content:center;gap:3px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.06);}
+.sdot{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:rgba(255,255,255,.4);transition:all .2s;flex-shrink:0;}
+.sdot.done{background:var(--gold);border-color:var(--gold);color:var(--navy);}
+.sdot.active{border-color:var(--gold);color:var(--gold-light);}
+.scon{width:9px;height:2px;background:rgba(255,255,255,.15);border-radius:1px;flex-shrink:0;}
+.scon.done{background:var(--gold);}
+
+.adm-nav{background:var(--navy);border-top:1px solid rgba(255,255,255,.08);padding:0 14px;display:none;gap:3px;justify-content:center;scrollbar-width:none;overflow-x:auto;}
+.adm-nav.on{display:flex;}
+.adm-nav::-webkit-scrollbar{display:none;}
+.nbtn{padding:10px 14px;background:none;border:none;border-bottom:3px solid transparent;color:rgba(255,255,255,.5);font-size:13px;font-weight:500;cursor:pointer;white-space:nowrap;font-family:inherit;transition:color .2s,border-color .2s;}
+.nbtn:hover{color:var(--gold-light);}
+.nbtn.on{color:var(--gold-light);border-bottom-color:var(--gold);}
+
+main{max-width:900px;margin:0 auto;padding:28px 16px 40px;}
+.ws{display:none;} .ws.on{display:block;}
+.as{display:none;} .as.on{display:block;}
+
+.sh{display:flex;align-items:center;gap:12px;margin-bottom:18px;}
+.si{width:42px;height:42px;background:var(--gold-pale);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:19px;flex-shrink:0;border:1.5px solid var(--border);}
+.st{font-size:18px;font-weight:700;color:var(--navy);}
+.ss{font-size:12px;color:var(--tlight);margin-top:2px;}
+
+/* CANDIDATE CARDS */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:12px;}
+.cc{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:18px 12px 14px;text-align:center;cursor:pointer;transition:transform .15s,box-shadow .15s,border-color .15s;position:relative;}
+.cc:hover{transform:translateY(-3px);box-shadow:var(--shadow);border-color:var(--gold);}
+.cc.voted{border-color:var(--gold);background:var(--gold-pale);transform:translateY(-3px);box-shadow:var(--shadow);}
+/* NOTA card */
+.cc.nota-card{border-color:#e0e0e0;background:#fafafa;}
+.cc.nota-card:hover{border-color:#999;}
+.cc.nota-card.voted{border-color:#e74c3c;background:#fff5f5;}
+.cc.nota-card.voted .vbtn{background:#e74c3c;color:#fff;}
+.cc.nota-card .sym{background:#f5f5f5;border-color:#e0e0e0;}
+.vbadge{position:absolute;top:8px;right:8px;background:var(--gold);color:var(--navy);font-size:10px;font-weight:700;padding:3px 7px;border-radius:20px;display:none;}
+.cc.voted .vbadge{display:block;}
+.cc.nota-card.voted .vbadge{background:#e74c3c;color:#fff;}
+.sym{width:52px;height:52px;border-radius:50%;background:var(--gold-pale);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;margin:0 auto 10px;}
+.cn{font-size:13px;font-weight:700;color:var(--navy);line-height:1.3;margin-bottom:3px;}
+.ccl{font-size:11px;color:var(--tlight);margin-bottom:6px;}
+.slbl{display:inline-block;background:var(--gold-pale);color:var(--tmid);font-size:11px;font-weight:600;padding:2px 9px;border-radius:20px;border:1px solid var(--border);}
+.cc.nota-card .slbl{background:#f5f5f5;border-color:#ddd;color:#888;}
+.vbtn{margin-top:10px;width:100%;padding:8px 0;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;transition:background .15s;font-family:inherit;}
+.vbtn:hover{background:#1a2d50;}
+.cc.voted .vbtn{background:var(--gold);color:var(--navy);}
+
+/* ADMIN STATS BAR */
+.stats-bar{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:22px;}
+.stat-box{background:#fff;border:1.5px solid var(--border);border-radius:14px;padding:16px 20px;flex:1;min-width:140px;text-align:center;}
+.stat-box.highlight{background:var(--navy);border-color:var(--navy);}
+.stat-num{font-size:28px;font-weight:800;color:var(--navy);line-height:1;}
+.stat-box.highlight .stat-num{color:var(--gold);}
+.stat-lbl{font-size:11px;color:var(--tlight);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:.8px;}
+.stat-box.highlight .stat-lbl{color:rgba(255,255,255,.6);}
+
+/* RESULTS */
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.rc{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:16px;}
+.rc-t{font-size:12px;font-weight:700;color:var(--navy);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+.rrow{display:flex;align-items:center;gap:8px;margin-bottom:8px;}
+.rsym{font-size:16px;flex-shrink:0;width:22px;text-align:center;}
+.rinf{flex:1;min-width:0;}
+.rname{font-size:11px;font-weight:600;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rbwrap{height:5px;background:var(--off);border-radius:3px;margin-top:3px;}
+.rb{height:5px;border-radius:3px;background:var(--gold);transition:width .6s;}
+.rb.win{background:#27ae60;}
+.rb.nota{background:#e74c3c;}
+.rcnt{font-size:11px;font-weight:700;color:var(--tmid);flex-shrink:0;min-width:28px;text-align:right;}
+.rpct{font-size:10px;color:var(--tlight);flex-shrink:0;min-width:34px;text-align:right;}
+
+/* REVIEW */
+.rv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:11px;margin-bottom:18px;}
+.rv-card{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:12px;display:flex;align-items:center;gap:10px;}
+.rv-card.nv{border-style:dashed;opacity:.6;}
+.rv-sym{font-size:22px;flex-shrink:0;}
+.rv-cat{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tlight);margin-bottom:2px;}
+.rv-name{font-size:12px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rv-lbl{font-size:10px;color:var(--tmid);}
+.rv-miss{font-size:11px;color:#c0392b;font-style:italic;}
+.sw-warn{background:#fff8e1;border:1.5px solid var(--gold);border-radius:10px;padding:11px 14px;font-size:12px;color:var(--tmid);margin-bottom:16px;display:none;}
+.sub-btn{display:block;margin:20px auto 0;padding:14px 40px;background:var(--gold);color:var(--navy);border:none;border-radius:12px;font-size:16px;font-weight:800;cursor:pointer;font-family:inherit;transition:background .15s,transform .1s;}
+.sub-btn:hover{background:#b8911f;}
+.sub-btn:active{transform:scale(.97);}
+
+/* SUBMITTED */
+.sub-scr{text-align:center;padding:60px 20px;}
+.sub-scr .bi{font-size:70px;margin-bottom:16px;}
+.sub-scr h2{font-size:22px;font-weight:800;color:var(--navy);margin-bottom:8px;}
+.sub-scr p{font-size:14px;color:var(--tmid);max-width:380px;margin:0 auto 28px;line-height:1.6;}
+.nsbox{background:var(--navy);border-radius:var(--r);padding:26px 20px;text-align:center;max-width:400px;margin:0 auto;}
+.nsbox h3{font-size:16px;font-weight:700;color:#fff;margin-bottom:5px;}
+.nsbox p{font-size:13px;color:rgba(255,255,255,.5);margin-bottom:16px;}
+.nsinput{width:150px;padding:11px 12px;border:2px solid rgba(255,255,255,.2);border-radius:10px;font-size:20px;font-family:monospace;text-align:center;letter-spacing:5px;outline:none;background:rgba(255,255,255,.08);color:#fff;transition:border-color .2s;}
+.nsinput::placeholder{color:rgba(255,255,255,.25);letter-spacing:1px;font-size:13px;}
+.nsinput:focus{border-color:var(--gold);}
+.nsinput.err{border-color:#e74c3c;animation:shk .3s;}
+.nserr{color:#e74c3c;font-size:12px;margin-top:5px;display:none;}
+.nsbtn{margin-top:13px;padding:11px 28px;background:var(--gold);color:var(--navy);border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.nsbtn:hover{background:#b8911f;}
+@keyframes shk{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* PASSCODE MODAL */
+.mover{display:none;position:fixed;inset:0;background:rgba(10,22,40,.82);z-index:100;align-items:center;justify-content:center;padding:20px;}
+.mover.on{display:flex;}
+.mbox{background:#fff;border-radius:20px;padding:28px 22px;max-width:330px;width:100%;text-align:center;box-shadow:0 24px 80px rgba(10,22,40,.3);}
+.mbox .mi{font-size:38px;margin-bottom:10px;}
+.mbox .mt{font-size:17px;font-weight:800;color:var(--navy);margin-bottom:5px;}
+.mbox .mb{font-size:13px;color:var(--tmid);margin-bottom:18px;line-height:1.5;}
+.pcinput{width:100%;padding:12px;border:2px solid var(--border);border-radius:10px;font-size:18px;font-family:monospace;text-align:center;letter-spacing:5px;outline:none;color:#1a1a2e;transition:border-color .2s;}
+.pcinput:focus{border-color:var(--gold);}
+.pcinput.err{border-color:#e74c3c;animation:shk .3s;}
+.pcerr{color:#e74c3c;font-size:12px;margin-top:6px;display:none;}
+.pcbtn{margin-top:12px;width:100%;padding:11px;background:var(--navy);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;}
+.pcbtn:hover{background:#1a2d50;}
+
+/* GS */
+.gss{background:#fff;border:1.5px solid var(--border);border-radius:var(--r);padding:20px;margin-bottom:16px;}
+.gss h3{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:8px;}
+.gsinput{width:100%;padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:13px;font-family:inherit;color:#1a1a2e;outline:none;transition:border-color .2s;margin-bottom:10px;}
+.gsinput:focus{border-color:var(--gold);}
+.gsbtn{padding:9px 16px;background:#34a853;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;margin-right:7px;margin-bottom:7px;}
+.gsbtn:hover{background:#2d9147;}
+.gsbtn.sec{background:var(--navy);}
+.gsbtn.sec:hover{background:#1a2d50;}
+.gsst{margin-top:9px;font-size:13px;padding:9px 12px;border-radius:8px;display:none;}
+.gsst.ok{background:#e6f4ea;color:#1e7e34;display:block;}
+.gsst.er{background:#fce8e6;color:#c5221f;display:block;}
+.gsst.inf{background:#e8f0fe;color:#1a56db;display:block;}
+.scode{background:#1e1e2e;color:#a6e3a1;border-radius:10px;padding:13px;font-size:11px;font-family:monospace;line-height:1.7;overflow-x:auto;margin-top:8px;}
+.scopy{display:inline-block;margin-top:7px;padding:6px 13px;background:var(--navy);color:#fff;border:none;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer;font-family:inherit;}
+
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(70px);background:var(--navy);color:#fff;padding:10px 20px;border-radius:30px;font-size:13px;font-weight:600;z-index:200;transition:transform .3s;white-space:nowrap;box-shadow:0 8px 32px rgba(10,22,40,.3);}
+.toast.on{transform:translateX(-50%) translateY(0);}
+
+footer{background:var(--navy);color:rgba(255,255,255,.45);text-align:center;padding:14px 20px;font-size:12px;}
+footer span{color:var(--gold);}
+@media(max-width:480px){.cgrid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr));}main{padding:20px 12px 36px;}.stats-bar{gap:10px;}.stat-box{padding:12px;}}
+</style>
+</head>
+<body>
+
+<header class="hdr">
+  <div class="hdr-pat"></div>
+  <div class="hdr-inner">
+    <div class="crest" id="crest" title="Hold 3s for admin">🏫</div>
+    <h1>Eden Global School</h1>
+    <div class="hdr-sub">Belandoor — Assembly Election 2026–27</div>
+    <div class="hdr-div"></div>
+    <p class="hdr-tag">Cast your vote and choose your student leaders for the year ahead.</p>
+  </div>
+  <div class="prog-wrap"><div class="prog-fill" id="pf" style="width:7%"></div></div>
+</header>
+
+<!-- 13 step dots: 0-11 voting, 12 review -->
+<div class="step-ind" id="stepInd">
+  <div class="sdot active" id="d0">1</div><div class="scon" id="c0"></div>
+  <div class="sdot" id="d1">2</div><div class="scon" id="c1"></div>
+  <div class="sdot" id="d2">3</div><div class="scon" id="c2"></div>
+  <div class="sdot" id="d3">4</div><div class="scon" id="c3"></div>
+  <div class="sdot" id="d4">5</div><div class="scon" id="c4"></div>
+  <div class="sdot" id="d5">6</div><div class="scon" id="c5"></div>
+  <div class="sdot" id="d6">7</div><div class="scon" id="c6"></div>
+  <div class="sdot" id="d7">8</div><div class="scon" id="c7"></div>
+  <div class="sdot" id="d8">9</div><div class="scon" id="c8"></div>
+  <div class="sdot" id="d9">10</div><div class="scon" id="c9"></div>
+  <div class="sdot" id="d10">11</div><div class="scon" id="c10"></div>
+  <div class="sdot" id="d11">12</div><div class="scon" id="c11"></div>
+  <div class="sdot" id="d12">✓</div>
+</div>
+
+<nav class="adm-nav" id="admNav">
+  <button class="nbtn on" onclick="showAdm('results',this)">📊 Results</button>
+  <button class="nbtn" onclick="showAdm('sheets',this)">📋 Google Sheets</button>
+  <button class="nbtn" onclick="backToVoting()">🗳️ Back to Voting</button>
+</nav>
+
+<main>
+
+<!-- ══ STEP 0: HEAD BOY ══ -->
+<div class="ws on" id="ws0">
+  <div class="sh"><div class="si">👑</div><div><div class="st">Head Boy</div><div class="ss">Tap a candidate to cast your vote — page advances automatically</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-hb-1" onclick="castVote('hb','hb-1','Muhammad Nihad','🏆','Trophy','')"><span class="vbadge">✓ Voted</span><div class="sym">🏆</div><div class="cn">Muhammad Nihad</div><div class="ccl">Head Boy</div><div class="slbl">Trophy</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-hb-2" onclick="castVote('hb','hb-2','Muhammad Shamil','🖊️','Pen','')"><span class="vbadge">✓ Voted</span><div class="sym">🖊️</div><div class="cn">Muhammad Shamil</div><div class="ccl">Head Boy</div><div class="slbl">Pen</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-hb-3" onclick="castVote('hb','hb-3','Twaha Shuhaid','👕','T-Shirt','')"><span class="vbadge">✓ Voted</span><div class="sym">👕</div><div class="cn">Twaha Shuhaid</div><div class="ccl">Head Boy</div><div class="slbl">T-Shirt</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-hb-nota" onclick="castVote('hb','hb-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 1: HEAD GIRL ══ -->
+<div class="ws" id="ws1">
+  <div class="sh"><div class="si">👑</div><div><div class="st">Head Girl</div><div class="ss">Tap a candidate to cast your vote — page advances automatically</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-hg-1" onclick="castVote('hg','hg-1','Fathima Shaza','👑','Crown','')"><span class="vbadge">✓ Voted</span><div class="sym">👑</div><div class="cn">Fathima Shaza</div><div class="ccl">Head Girl</div><div class="slbl">Crown</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-hg-2" onclick="castVote('hg','hg-2','Anam Fathima','🚀','Rocket','')"><span class="vbadge">✓ Voted</span><div class="sym">🚀</div><div class="cn">Anam Fathima</div><div class="ccl">Head Girl</div><div class="slbl">Rocket</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-hg-nota" onclick="castVote('hg','hg-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 2: ASST HEAD BOY ══ -->
+<div class="ws" id="ws2">
+  <div class="sh"><div class="si">⭐</div><div><div class="st">Assistant Head Boy</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-ahb-1" onclick="castVote('ahb','ahb-1','Muhammad Afraz','🏫','School','9A')"><span class="vbadge">✓ Voted</span><div class="sym">🏫</div><div class="cn">Muhammad Afraz</div><div class="ccl">Class 9A</div><div class="slbl">School</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-ahb-2" onclick="castVote('ahb','ahb-2','Muhammad Afriz','🚲','Bike','9B')"><span class="vbadge">✓ Voted</span><div class="sym">🚲</div><div class="cn">Muhammad Afriz</div><div class="ccl">Class 9B</div><div class="slbl">Bike</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-ahb-3" onclick="castVote('ahb','ahb-3','Muhammad Sufi Aksam','📖','Book','9B')"><span class="vbadge">✓ Voted</span><div class="sym">📖</div><div class="cn">Muhammad Sufi Aksam</div><div class="ccl">Class 9B</div><div class="slbl">Book</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-ahb-nota" onclick="castVote('ahb','ahb-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 3: ASST HEAD GIRL ══ -->
+<div class="ws" id="ws3">
+  <div class="sh"><div class="si">⭐</div><div><div class="st">Assistant Head Girl</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-ahg-1" onclick="castVote('ahg','ahg-1','Aifa Fathima','🚗','Car','9B')"><span class="vbadge">✓ Voted</span><div class="sym">🚗</div><div class="cn">Aifa Fathima</div><div class="ccl">Class 9B</div><div class="slbl">Car</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-ahg-2" onclick="castVote('ahg','ahg-2','Siza Fathima','🧸','Teddy Bear','9B')"><span class="vbadge">✓ Voted</span><div class="sym">🧸</div><div class="cn">Siza Fathima</div><div class="ccl">Class 9B</div><div class="slbl">Teddy Bear</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-ahg-nota" onclick="castVote('ahg','ahg-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 4: DISCIPLINE BOY ══ -->
+<div class="ws" id="ws4">
+  <div class="sh"><div class="si">⚖️</div><div><div class="st">Discipline Minister – Boy</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-dmb-1" onclick="castVote('dmb','dmb-1','Muhammad Hazim','🕐','Clock','9A')"><span class="vbadge">✓ Voted</span><div class="sym">🕐</div><div class="cn">Muhammad Hazim</div><div class="ccl">Class 9A</div><div class="slbl">Clock</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-dmb-2" onclick="castVote('dmb','dmb-2','Muhammad Shahik','🚌','Bus','9A')"><span class="vbadge">✓ Voted</span><div class="sym">🚌</div><div class="cn">Muhammad Shahik</div><div class="ccl">Class 9A</div><div class="slbl">Bus</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-dmb-nota" onclick="castVote('dmb','dmb-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 5: DISCIPLINE GIRL ══ -->
+<div class="ws" id="ws5">
+  <div class="sh"><div class="si">⚖️</div><div><div class="st">Discipline Minister – Girl</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-dmg-1" onclick="castVote('dmg','dmg-1','Anabiya Hameed','🦢','Swan','8B')"><span class="vbadge">✓ Voted</span><div class="sym">🦢</div><div class="cn">Anabiya Hameed</div><div class="ccl">Class 8B</div><div class="slbl">Swan</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-dmg-2" onclick="castVote('dmg','dmg-2','Ayesha B.H.','🌙','Moon','9B')"><span class="vbadge">✓ Voted</span><div class="sym">🌙</div><div class="cn">Ayesha B.H.</div><div class="ccl">Class 9B</div><div class="slbl">Moon</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-dmg-nota" onclick="castVote('dmg','dmg-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 6: HEALTH BOY ══ -->
+<div class="ws" id="ws6">
+  <div class="sh"><div class="si">🏥</div><div><div class="st">Health Minister – Boy</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-hmb-1" onclick="castVote('hmb','hmb-1','Hassan Sahad','🚑','Ambulance','8B')"><span class="vbadge">✓ Voted</span><div class="sym">🚑</div><div class="cn">Hassan Sahad</div><div class="ccl">Class 8B</div><div class="slbl">Ambulance</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-hmb-2" onclick="castVote('hmb','hmb-2','Muhammad Sunaid','♿','Wheelchair','8A')"><span class="vbadge">✓ Voted</span><div class="sym">♿</div><div class="cn">Muhammad Sunaid</div><div class="ccl">Class 8A</div><div class="slbl">Wheelchair</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-hmb-nota" onclick="castVote('hmb','hmb-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 7: HEALTH GIRL ══ -->
+<div class="ws" id="ws7">
+  <div class="sh"><div class="si">🏥</div><div><div class="st">Health Minister – Girl</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-hmg-1" onclick="castVote('hmg','hmg-1','Assiya Niyaba','☂️','Umbrella','8A')"><span class="vbadge">✓ Voted</span><div class="sym">☂️</div><div class="cn">Assiya Niyaba</div><div class="ccl">Class 8A</div><div class="slbl">Umbrella</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-hmg-2" onclick="castVote('hmg','hmg-2','Nafeesa Maha','💉','Injection','9B')"><span class="vbadge">✓ Voted</span><div class="sym">💉</div><div class="cn">Nafeesa Maha</div><div class="ccl">Class 9B</div><div class="slbl">Injection</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-hmg-3" onclick="castVote('hmg','hmg-3','Ameena Izma','🩹','First Aid','9A')"><span class="vbadge">✓ Voted</span><div class="sym">🩹</div><div class="cn">Ameena Izma</div><div class="ccl">Class 9A</div><div class="slbl">First Aid</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-hmg-nota" onclick="castVote('hmg','hmg-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 8: CULTURAL BOY ══ -->
+<div class="ws" id="ws8">
+  <div class="sh"><div class="si">🎨</div><div><div class="st">Cultural Minister – Boy</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-cmb-1" onclick="castVote('cmb','cmb-1','Muhammad Jalal','🎧','Headphone','9B')"><span class="vbadge">✓ Voted</span><div class="sym">🎧</div><div class="cn">Muhammad Jalal</div><div class="ccl">Class 9B</div><div class="slbl">Headphone</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-cmb-2" onclick="castVote('cmb','cmb-2','Muhammad Nawaf','💻','Laptop','8B')"><span class="vbadge">✓ Voted</span><div class="sym">💻</div><div class="cn">Muhammad Nawaf</div><div class="ccl">Class 8B</div><div class="slbl">Laptop</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-cmb-nota" onclick="castVote('cmb','cmb-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 9: CULTURAL GIRL ══ -->
+<div class="ws" id="ws9">
+  <div class="sh"><div class="si">🎨</div><div><div class="st">Cultural Minister – Girl</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-cmg-1" onclick="castVote('cmg','cmg-1','Fathimath Anoofa','🦋','Butterfly','9A')"><span class="vbadge">✓ Voted</span><div class="sym">🦋</div><div class="cn">Fathimath Anoofa</div><div class="ccl">Class 9A</div><div class="slbl">Butterfly</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-cmg-2" onclick="castVote('cmg','cmg-2','Rida Fathima','🎤','Mic','8B')"><span class="vbadge">✓ Voted</span><div class="sym">🎤</div><div class="cn">Rida Fathima</div><div class="ccl">Class 8B</div><div class="slbl">Mic</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-cmg-nota" onclick="castVote('cmg','cmg-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 10: SPORTS BOY ══ -->
+<div class="ws" id="ws10">
+  <div class="sh"><div class="si">🏆</div><div><div class="st">Sports Minister – Boy</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-smb-1" onclick="castVote('smb','smb-1','Muhammad Fizan','🏏','Bat &amp; Ball','8A')"><span class="vbadge">✓ Voted</span><div class="sym">🏏</div><div class="cn">Muhammad Fizan</div><div class="ccl">Class 8A</div><div class="slbl">Bat &amp; Ball</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-smb-2" onclick="castVote('smb','smb-2','Mohammad Ahsan','⚽','Football','9A')"><span class="vbadge">✓ Voted</span><div class="sym">⚽</div><div class="cn">Mohammad Ahsan</div><div class="ccl">Class 9A</div><div class="slbl">Football</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-smb-nota" onclick="castVote('smb','smb-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 11: SPORTS GIRL ══ -->
+<div class="ws" id="ws11">
+  <div class="sh"><div class="si">🏆</div><div><div class="st">Sports Minister – Girl</div><div class="ss">Tap a candidate to cast your vote</div></div></div>
+  <div class="cgrid">
+    <div class="cc" id="card-smg-1" onclick="castVote('smg','smg-1','Nidha Fathima','🛼','Skate Shoes','8B')"><span class="vbadge">✓ Voted</span><div class="sym">🛼</div><div class="cn">Nidha Fathima</div><div class="ccl">Class 8B</div><div class="slbl">Skate Shoes</div><button class="vbtn">Vote</button></div>
+    <div class="cc" id="card-smg-2" onclick="castVote('smg','smg-2','Ayishath Fahmi','🏸','Shuttle Bat','9B')"><span class="vbadge">✓ Voted</span><div class="sym">🏸</div><div class="cn">Ayishath Fahmi</div><div class="ccl">Class 9B</div><div class="slbl">Shuttle Bat</div><button class="vbtn">Vote</button></div>
+    <div class="cc nota-card" id="card-smg-nota" onclick="castVote('smg','smg-nota','NOTA','🚫','NOTA','')"><span class="vbadge">✓ NOTA</span><div class="sym">🚫</div><div class="cn">NOTA</div><div class="ccl">None of the Above</div><div class="slbl">NOTA</div><button class="vbtn" style="background:#e74c3c;">NOTA</button></div>
+  </div>
+</div>
+
+<!-- ══ STEP 12: REVIEW ══ -->
+<div class="ws" id="ws12">
+  <div class="sh"><div class="si">📋</div><div><div class="st">Review Your Votes</div><div class="ss">Check all 12 selections before final submission</div></div></div>
+  <div class="sw-warn" id="swWarn"><strong>⚠️ Incomplete:</strong> Some categories have no vote. You may still submit.</div>
+  <div class="rv-grid" id="rvGrid"></div>
+  <button class="sub-btn" onclick="submitVotes()">✅ Final Submit</button>
+</div>
+
+<!-- ══ SUBMITTED ══ -->
+<div class="ws" id="ws-sub">
+  <div class="sub-scr">
+    <div class="bi">🎉</div>
+    <h2>Vote Submitted!</h2>
+    <p>Thank you for participating in the Eden Global School Assembly Election 2026–27. Your votes have been saved successfully.</p>
+    <div class="nsbox">
+      <h3>🗳️ Next Student Vote</h3>
+      <p>Supervisor: enter the unlock code to allow the next student to vote</p>
+      <input type="password" class="nsinput" id="nsInput" placeholder="Enter code" maxlength="6" onkeydown="if(event.key==='Enter')checkNextCode()">
+      <div class="nserr" id="nsErr">❌ Incorrect code. Try again.</div>
+      <button class="nsbtn" onclick="checkNextCode()">Unlock Next Vote →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ ADMIN: RESULTS ══ -->
+<div class="as" id="as-results">
+  <div class="sh"><div class="si">📊</div><div><div class="st">Live Vote Tally</div><div class="ss">All submitted votes — cumulative totals</div></div></div>
+  <!-- STATS BAR -->
+  <div class="stats-bar" id="statsBar">
+    <div class="stat-box highlight"><div class="stat-num" id="statTotal">0</div><div class="stat-lbl">Total Votes Polled</div></div>
+    <div class="stat-box"><div class="stat-num" id="statVoters">0</div><div class="stat-lbl">Voters Participated</div></div>
+    <div class="stat-box"><div class="stat-num" id="statPct">0%</div><div class="stat-lbl">Turnout (est. of 500)</div></div>
+    <div class="stat-box"><div class="stat-num" id="statNota">0</div><div class="stat-lbl">Total NOTA Votes</div></div>
+  </div>
+  <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;">
+    <div>
+      <button class="gsbtn" onclick="buildAdmResults()" style="margin:0 6px 0 0;">🔄 Refresh</button>
+      <button class="gsbtn sec" onclick="exportCSV()" style="margin:0;">⬇️ Export CSV</button>
+    </div>
+    <button onclick="openResetConfirm()" style="padding:9px 18px;background:#e74c3c;color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:6px;">🗑️ Reset All Votes</button>
+  </div>
+  <div class="rg" id="admRG"></div>
+</div>
+
+<!-- ══ ADMIN: GOOGLE SHEETS ══ -->
+<div class="as" id="as-sheets">
+  <div class="sh"><div class="si">📋</div><div><div class="st">Google Sheets Integration</div><div class="ss">Connect to save every submitted vote automatically</div></div></div>
+  <div class="gss">
+    <h3>Step 1 – Connect Your Sheet</h3>
+    <p style="font-size:13px;color:var(--tmid);margin-bottom:12px;">Paste your Google Apps Script Web App URL below. Votes are sent on Final Submit.</p>
+    <input type="url" class="gsinput" id="gsUrl" placeholder="https://script.google.com/macros/s/YOUR_ID/exec">
+    <button class="gsbtn" onclick="saveGsUrl()">💾 Save</button>
+    <button class="gsbtn sec" onclick="testGs()">🔗 Test Connection</button>
+    <div class="gsst" id="gsSt"></div>
+  </div>
+  <div class="gss">
+    <h3>Step 2 – Apps Script Code</h3>
+    <p style="font-size:13px;color:var(--tmid);margin-bottom:7px;">Go to <a href="https://script.google.com" target="_blank" style="color:var(--navy)">script.google.com</a> → New Project → paste → Deploy as Web App (Anyone can access).</p>
+    <div class="scode" id="scode">// ─────────────────────────────────────────────────────
+//  Eden Global School — Assembly Election 2026-27
+//  Google Apps Script — Paste this ENTIRE code,
+//  then Deploy → New Deployment → Web App → Anyone
+// ─────────────────────────────────────────────────────
+
+function doPost(e) {
+  return saveRow(e.parameter);
+}
+
+function doGet(e) {
+  return saveRow(e.parameter);
+}
+
+function saveRow(p) {
+  try {
+    var ss    = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName("Votes");
+    if (!sheet) {
+      sheet = ss.insertSheet("Votes");
+    }
+    // Add header row if the sheet is empty
+    if (sheet.getLastRow() === 0) {
+      sheet.appendRow([
+        "Timestamp (IST)", "Voter ID",
+        "Category", "Candidate", "Symbol", "Class"
+      ]);
+      var hdr = sheet.getRange(1, 1, 1, 6);
+      hdr.setFontWeight("bold");
+      hdr.setBackground("#0a1628");
+      hdr.setFontColor("#c9a227");
+      hdr.setFontSize(11);
+      sheet.setFrozenRows(1);
+      sheet.setColumnWidth(1, 180);
+      sheet.setColumnWidth(2, 140);
+      sheet.setColumnWidth(3, 180);
+      sheet.setColumnWidth(4, 180);
+      sheet.setColumnWidth(5, 120);
+      sheet.setColumnWidth(6, 80);
+    }
+    // Skip empty / test pings
+    var cat = (p.category || "").trim();
+    if (cat === "" || cat === "TEST") {
+      return ContentService
+        .createTextOutput("SKIPPED")
+        .setMimeType(ContentService.MimeType.TEXT);
+    }
+    sheet.appendRow([
+      new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
+      p.voterId    || "",
+      cat,
+      p.candidate  || "",
+      p.symbol     || "",
+      p.cls        || ""
+    ]);
+    return ContentService
+      .createTextOutput("SAVED")
+      .setMimeType(ContentService.MimeType.TEXT);
+  } catch (err) {
+    return ContentService
+      .createTextOutput("ERROR: " + err.toString())
+      .setMimeType(ContentService.MimeType.TEXT);
+  }
+}</div>
+    <button class="scopy" onclick="copyScript()">📋 Copy Script</button>
+  </div>
+</div>
+
+</main>
+
+<!-- RESET CONFIRM MODAL -->
+<div class="mover" id="resetModal">
+  <div class="mbox" style="border-top:4px solid #e74c3c;">
+    <div class="mi">⚠️</div>
+    <div class="mt" style="color:#e74c3c;">Reset All Votes?</div>
+    <div class="mb">This will <strong>permanently delete</strong> all vote counts and voter records. This action <strong>cannot be undone</strong>. Are you absolutely sure?</div>
+    <div style="display:flex;gap:10px;justify-content:center;">
+      <button class="mcancel" onclick="document.getElementById('resetModal').classList.remove('on')">Cancel</button>
+      <button onclick="doResetAll()" style="padding:9px 20px;background:#e74c3c;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;color:#fff;font-family:inherit;">🗑️ Yes, Reset Everything</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADMIN PASSCODE MODAL -->
+<div class="mover" id="pcModal">
+  <div class="mbox">
+    <div class="mi">🔐</div>
+    <div class="mt">Admin Access</div>
+    <div class="mb">Enter the admin passcode to view results and Google Sheets data.</div>
+    <input type="password" class="pcinput" id="pcInput" placeholder="Admin code" maxlength="12" onkeydown="if(event.key==='Enter')checkPc()">
+    <div class="pcerr" id="pcErr">❌ Incorrect code. Try again.</div>
+    <button class="pcbtn" onclick="checkPc()">Unlock →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<footer>
+  <strong style="color:#fff">Eden Global School</strong> &nbsp;·&nbsp; Assembly Election <span>2026–27</span>
+  &nbsp;&nbsp;
+  <button onclick="openAdmin()" style="background:none;border:1px solid rgba(255,255,255,0.2);color:rgba(255,255,255,0.4);font-size:11px;padding:3px 10px;border-radius:20px;cursor:pointer;font-family:inherit;">🔒 Admin</button>
+</footer>
+
+<script>
+const ADMIN_CODE = 'EGSEC2026';
+const NEXT_CODE  = '1234';
+const TOTAL_STEPS = 12; // 0-11 voting, 12 review
+const EST_VOTERS = 500; // for turnout %
+
+const stepLabel = ['Head Boy','Head Girl','Asst. Head Boy','Asst. Head Girl','Discipline Min. – Boy','Discipline Min. – Girl','Health Min. – Boy','Health Min. – Girl','Cultural Min. – Boy','Cultural Min. – Girl','Sports Min. – Boy','Sports Min. – Girl'];
+const stepCat   = ['hb','hg','ahb','ahg','dmb','dmg','hmb','hmg','cmb','cmg','smb','smg'];
+const catLabel  = {hb:'Head Boy',hg:'Head Girl',ahb:'Asst. Head Boy',ahg:'Asst. Head Girl',dmb:'Discipline Min. Boy',dmg:'Discipline Min. Girl',hmb:'Health Min. Boy',hmg:'Health Min. Girl',cmb:'Cultural Min. Boy',cmg:'Cultural Min. Girl',smb:'Sports Min. Boy',smg:'Sports Min. Girl'};
+const candidates = {
+  hb: [{id:'hb-1',name:'Muhammad Nihad',sym:'🏆',lbl:'Trophy',cls:''},{id:'hb-2',name:'Muhammad Shamil',sym:'🖊️',lbl:'Pen',cls:''},{id:'hb-3',name:'Twaha Shuhaid',sym:'👕',lbl:'T-Shirt',cls:''}],
+  hg: [{id:'hg-1',name:'Fathima Shaza',sym:'👑',lbl:'Crown',cls:''},{id:'hg-2',name:'Anam Fathima',sym:'🚀',lbl:'Rocket',cls:''}],
+  ahb:[{id:'ahb-1',name:'Muhammad Afraz',sym:'🏫',lbl:'School',cls:'9A'},{id:'ahb-2',name:'Muhammad Afriz',sym:'🚲',lbl:'Bike',cls:'9B'},{id:'ahb-3',name:'Muhammad Sufi Aksam',sym:'📖',lbl:'Book',cls:'9B'}],
+  ahg:[{id:'ahg-1',name:'Aifa Fathima',sym:'🚗',lbl:'Car',cls:'9B'},{id:'ahg-2',name:'Siza Fathima',sym:'🧸',lbl:'Teddy Bear',cls:'9B'}],
+  dmb:[{id:'dmb-1',name:'Muhammad Hazim',sym:'🕐',lbl:'Clock',cls:'9A'},{id:'dmb-2',name:'Muhammad Shahik',sym:'🚌',lbl:'Bus',cls:'9A'}],
+  dmg:[{id:'dmg-1',name:'Anabiya Hameed',sym:'🦢',lbl:'Swan',cls:'8B'},{id:'dmg-2',name:'Ayesha B.H.',sym:'🌙',lbl:'Moon',cls:'9B'}],
+  hmb:[{id:'hmb-1',name:'Hassan Sahad',sym:'🚑',lbl:'Ambulance',cls:'8B'},{id:'hmb-2',name:'Muhammad Sunaid',sym:'♿',lbl:'Wheelchair',cls:'8A'}],
+  hmg:[{id:'hmg-1',name:'Assiya Niyaba',sym:'☂️',lbl:'Umbrella',cls:'8A'},{id:'hmg-2',name:'Nafeesa Maha',sym:'💉',lbl:'Injection',cls:'9B'},{id:'hmg-3',name:'Ameena Izma',sym:'🩹',lbl:'First Aid',cls:'9A'}],
+  cmb:[{id:'cmb-1',name:'Muhammad Jalal',sym:'🎧',lbl:'Headphone',cls:'9B'},{id:'cmb-2',name:'Muhammad Nawaf',sym:'💻',lbl:'Laptop',cls:'8B'}],
+  cmg:[{id:'cmg-1',name:'Fathimath Anoofa',sym:'🦋',lbl:'Butterfly',cls:'9A'},{id:'cmg-2',name:'Rida Fathima',sym:'🎤',lbl:'Mic',cls:'8B'}],
+  smb:[{id:'smb-1',name:'Muhammad Fizan',sym:'🏏',lbl:'Bat & Ball',cls:'8A'},{id:'smb-2',name:'Mohammad Ahsan',sym:'⚽',lbl:'Football',cls:'9A'}],
+  smg:[{id:'smg-1',name:'Nidha Fathima',sym:'🛼',lbl:'Skate Shoes',cls:'8B'},{id:'smg-2',name:'Ayishath Fahmi',sym:'🏸',lbl:'Shuttle Bat',cls:'9B'}],
+};
+const allCats = ['hb','hg','ahb','ahg','dmb','dmg','hmb','hmg','cmb','cmg','smb','smg'];
+
+// NOTA candidate appended per category
+allCats.forEach(cat=>{
+  candidates[cat].push({id:cat+'-nota',name:'NOTA',sym:'🚫',lbl:'NOTA',cls:''});
+});
+
+// Persistent vote counts (never cleared)
+let voteCounts  = JSON.parse(localStorage.getItem('egsVC')||'{}');
+// Persistent voter count
+let voterCount  = parseInt(localStorage.getItem('egsVoterCount')||'0');
+// Current session
+let sessionVotes = {};
+let step = 0;
+let voterId = newVid();
+function newVid(){ return 'V'+Date.now()+Math.floor(Math.random()*9999); }
+
+// ══════════════════════════════════
+// LOUD BEEP
+// ══════════════════════════════════
+function beep(){
+  try{
+    const ctx=new(window.AudioContext||window.webkitAudioContext)();
+    // Two oscillators for richness
+    [880,1100].forEach((freq,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.connect(g); g.connect(ctx.destination);
+      o.type=i===0?'sine':'square';
+      o.frequency.value=freq;
+      g.gain.setValueAtTime(i===0?1.0:0.4,ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+1.2);
+      o.start(ctx.currentTime); o.stop(ctx.currentTime+1.2);
+    });
+  }catch(e){}
+}
+
+// ══════════════════════════════════
+// RENDER STEP
+// ══════════════════════════════════
+function renderStep(){
+  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('on'));
+  document.getElementById('ws'+step).classList.add('on');
+  const pf=document.getElementById('pf');
+  // Dots
+  for(let i=0;i<=12;i++){
+    const d=document.getElementById('d'+i);if(!d)continue;
+    d.classList.remove('done','active');
+    if(i<step)d.classList.add('done');
+    else if(i===step)d.classList.add('active');
+  }
+  for(let i=0;i<=11;i++){
+    const c=document.getElementById('c'+i);if(c)c.classList.toggle('done',i<step);
+  }
+  pf.style.width=(step<TOTAL_STEPS?(((step+1)/13)*100):step===TOTAL_STEPS?97:100)+'%';
+  // Restore session highlight for this step's category
+  if(step<TOTAL_STEPS){
+    const cat=stepCat[step];
+    const vid=sessionVotes[cat];
+    if(vid){
+      document.getElementById('card-'+vid)?.classList.add('voted');
+    }
+  } else if(step===TOTAL_STEPS){
+    buildReview();
+  }
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════
+// CAST VOTE — direct, no modal
+// ══════════════════════════════════
+function castVote(cat,id,name,sym,lbl,cls){
+  if(sessionVotes[cat]===id){showToast('Already selected '+name);return;}
+  // Remove prev pick for same category
+  const prev=sessionVotes[cat];
+  if(prev){
+    document.getElementById('card-'+prev)?.classList.remove('voted');
+  }
+  sessionVotes[cat]=id;
+  const card=document.getElementById('card-'+id);
+  if(card)card.classList.add('voted');
+  // Update button text
+  const btn=card?.querySelector('.vbtn');
+  if(btn){
+    btn.textContent=id.endsWith('-nota')?'✓ NOTA':'✓ Voted';
+    if(!id.endsWith('-nota'))btn.style.background='';
+  }
+  showToast(id.endsWith('-nota')?'NOTA recorded for '+catLabel[cat]:'✓ '+name+' selected!');
+  // Auto-advance after 500ms
+  setTimeout(()=>{step++;renderStep();},500);
+}
+
+// ══════════════════════════════════
+// REVIEW
+// ══════════════════════════════════
+function buildReview(){
+  const g=document.getElementById('rvGrid');g.innerHTML='';
+  let miss=0;
+  allCats.forEach(cat=>{
+    const vid=sessionVotes[cat];
+    const isNota=vid&&vid.endsWith('-nota');
+    const cand=vid?candidates[cat].find(c=>c.id===vid):null;
+    const d=document.createElement('div');
+    d.className='rv-card'+(cand?'':' nv');
+    if(cand){
+      d.innerHTML=`<div class="rv-sym">${cand.sym}</div>
+        <div><div class="rv-cat">${catLabel[cat]}</div>
+        <div class="rv-name">${isNota?'NOTA':cand.name}</div>
+        <div class="rv-lbl">${cand.lbl}${cand.cls?' · Class '+cand.cls:''}</div></div>`;
+    }else{
+      miss++;
+      d.innerHTML=`<div class="rv-sym">❌</div>
+        <div><div class="rv-cat">${catLabel[cat]}</div>
+        <div class="rv-miss">No vote cast</div></div>`;
+    }
+    g.appendChild(d);
+  });
+  document.getElementById('swWarn').style.display=miss>0?'block':'none';
+}
+
+// ══════════════════════════════════
+// SUBMIT
+// ══════════════════════════════════
+function submitVotes(){
+  beep();
+  // Increment voter count
+  voterCount++;
+  localStorage.setItem('egsVoterCount',voterCount);
+  // Add to persistent counts
+  allCats.forEach(cat=>{
+    const vid=sessionVotes[cat];if(!vid)return;
+    voteCounts[vid]=(voteCounts[vid]||0)+1;
+  });
+  localStorage.setItem('egsVC',JSON.stringify(voteCounts));
+  // Send to Google Sheets
+  allCats.forEach(cat=>{
+    const vid=sessionVotes[cat];if(!vid)return;
+    const cand=candidates[cat].find(c=>c.id===vid);if(!cand)return;
+    sendToSheets(cat,cand);
+  });
+  // Show submitted
+  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('on'));
+  document.getElementById('ws-sub').classList.add('on');
+  document.getElementById('stepInd').style.display='none';
+  document.getElementById('pf').style.width='100%';
+  for(let i=0;i<=12;i++){const d=document.getElementById('d'+i);if(d){d.classList.remove('active');d.classList.add('done');}}
+  for(let i=0;i<=11;i++){const c=document.getElementById('c'+i);if(c)c.classList.add('done');}
+  document.getElementById('nsInput').value='';
+  document.getElementById('nsErr').style.display='none';
+  document.getElementById('nsInput').classList.remove('err');
+}
+
+// ══════════════════════════════════
+// NEXT STUDENT
+// ══════════════════════════════════
+function checkNextCode(){
+  const v=document.getElementById('nsInput').value.trim();
+  if(v===NEXT_CODE){resetVoter();}
+  else{
+    document.getElementById('nsInput').classList.add('err');
+    document.getElementById('nsErr').style.display='block';
+    setTimeout(()=>document.getElementById('nsInput').classList.remove('err'),400);
+  }
+}
+function resetVoter(){
+  sessionVotes={};
+  voterId=newVid();
+  step=0;
+  document.querySelectorAll('.cc').forEach(c=>c.classList.remove('voted'));
+  document.querySelectorAll('.vbtn').forEach(b=>{
+    if(b.closest('.nota-card'))b.textContent='NOTA';
+    else b.textContent='Vote';
+    b.style.background='';
+  });
+  document.getElementById('stepInd').style.display='flex';
+  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('on'));
+  document.querySelectorAll('.as').forEach(a=>a.classList.remove('on'));
+  document.getElementById('admNav').classList.remove('on');
+  renderStep();
+  showToast('✓ Ready for next student!');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ══════════════════════════════════
+// ADMIN — always ask passcode
+// ══════════════════════════════════
+let pendingAdmTarget='results';
+function openAdmin(target){
+  pendingAdmTarget=target||'results';
+  document.getElementById('pcInput').value='';
+  document.getElementById('pcErr').style.display='none';
+  document.getElementById('pcInput').classList.remove('err');
+  document.getElementById('pcModal').classList.add('on');
+  setTimeout(()=>document.getElementById('pcInput').focus(),120);
+}
+function checkPc(){
+  const v=document.getElementById('pcInput').value.trim();
+  if(v===ADMIN_CODE){
+    document.getElementById('pcModal').classList.remove('on');
+    enterAdmin(pendingAdmTarget);
+  }else{
+    document.getElementById('pcInput').classList.add('err');
+    document.getElementById('pcErr').style.display='block';
+    setTimeout(()=>document.getElementById('pcInput').classList.remove('err'),400);
+  }
+}
+function enterAdmin(section){
+  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('on'));
+  document.querySelectorAll('.as').forEach(a=>a.classList.remove('on'));
+  document.getElementById('stepInd').style.display='none';
+  document.getElementById('admNav').classList.add('on');
+  showAdm(section,null);
+}
+function showAdm(section,btn){
+  document.querySelectorAll('.as').forEach(a=>a.classList.remove('on'));
+  document.getElementById('as-'+section).classList.add('on');
+  document.querySelectorAll('.nbtn').forEach(b=>b.classList.remove('on'));
+  if(btn)btn.classList.add('on');
+  else document.querySelector('.adm-nav .nbtn')?.classList.add('on');
+  if(section==='results')buildAdmResults();
+  const saved=localStorage.getItem('gsUrl');
+  const el=document.getElementById('gsUrl');
+  if(saved&&el)el.value=saved;
+}
+function backToVoting(){
+  document.querySelectorAll('.as').forEach(a=>a.classList.remove('on'));
+  document.getElementById('admNav').classList.remove('on');
+  document.getElementById('stepInd').style.display='flex';
+  document.querySelectorAll('.ws').forEach(w=>w.classList.remove('on'));
+  if(Object.keys(sessionVotes).length===0&&step===0){
+    document.getElementById('ws0').classList.add('on');
+  }else{
+    renderStep();
+  }
+}
+
+// ══════════════════════════════════
+// ADMIN RESULTS with stats
+// ══════════════════════════════════
+function buildAdmResults(){
+  // Total votes polled = sum of all voteCounts
+  let totalVotes=0, notaVotes=0;
+  Object.entries(voteCounts).forEach(([id,v])=>{
+    totalVotes+=v;
+    if(id.endsWith('-nota'))notaVotes+=v;
+  });
+  const vc = voterCount;
+  const pct = EST_VOTERS>0?Math.min(100,Math.round((vc/EST_VOTERS)*100)):0;
+  document.getElementById('statTotal').textContent = totalVotes.toLocaleString();
+  document.getElementById('statVoters').textContent = vc.toLocaleString();
+  document.getElementById('statPct').textContent = pct+'%';
+  document.getElementById('statNota').textContent = notaVotes.toLocaleString();
+
+  const titles={hb:'Head Boy',hg:'Head Girl',ahb:'Asst. Head Boy',ahg:'Asst. Head Girl',dmb:'Discipline Boy',dmg:'Discipline Girl',hmb:'Health Boy',hmg:'Health Girl',cmb:'Cultural Boy',cmg:'Cultural Girl',smb:'Sports Boy',smg:'Sports Girl'};
+  const g=document.getElementById('admRG'); g.innerHTML='';
+  allCats.forEach(cat=>{
+    const list=candidates[cat];
+    const catTotal=list.reduce((s,c)=>s+(voteCounts[c.id]||0),0);
+    const maxV=Math.max(1,...list.map(c=>voteCounts[c.id]||0));
+    // winner = non-NOTA with highest votes
+    const nonNota=list.filter(c=>!c.id.endsWith('-nota'));
+    const winId=nonNota.length?nonNota.reduce((a,b)=>(voteCounts[b.id]||0)>(voteCounts[a.id]||0)?b:a).id:'';
+    const card=document.createElement('div'); card.className='rc';
+    card.innerHTML='<div class="rc-t">'+titles[cat]+'</div>'+
+      list.map(c=>{
+        const v=voteCounts[c.id]||0;
+        const pct2=maxV>0?Math.round((v/maxV)*100):0;
+        const pctOfCat=catTotal>0?Math.round((v/catTotal)*100):0;
+        const win=c.id===winId&&v>0&&!c.id.endsWith('-nota');
+        const isNota=c.id.endsWith('-nota');
+        return `<div class="rrow">
+          <span class="rsym">${c.sym}${win?' 🥇':''}</span>
+          <div class="rinf">
+            <div class="rname">${c.name}${c.cls?' ('+c.cls+')':''}</div>
+            <div class="rbwrap"><div class="rb${win?' win':isNota?' nota':''}" style="width:${pct2}%"></div></div>
+          </div>
+          <span class="rcnt">${v}</span>
+          <span class="rpct">${pctOfCat}%</span>
+        </div>`;
+      }).join('');
+    g.appendChild(card);
+  });
+}
+
+// ══════════════════════════════════
+// GOOGLE SHEETS
+// Uses hidden iframe + form POST — works from ANY context
+// (file://, http://, no CORS issues ever)
+// ══════════════════════════════════
+
+// Create a hidden iframe once for form submission
+let _ifrm = null;
+function getIframe(){
+  if(!_ifrm){
+    _ifrm = document.createElement('iframe');
+    _ifrm.name = 'gsIframe';
+    _ifrm.style.cssText = 'display:none;position:absolute;width:0;height:0;border:0;';
+    document.body.appendChild(_ifrm);
+  }
+  return _ifrm;
+}
+
+function sendToSheets(cat, cand){
+  const url = localStorage.getItem('gsUrl');
+  if(!url) return;
+  getIframe(); // ensure iframe exists
+  const form = document.createElement('form');
+  form.method  = 'POST';
+  form.action  = url;
+  form.target  = 'gsIframe';
+  form.style.display = 'none';
+  const fields = {
+    voterId:   voterId,
+    category:  catLabel[cat],
+    candidate: cand.name,
+    symbol:    cand.lbl,
+    cls:       cand.cls || ''
+  };
+  Object.entries(fields).forEach(([k,v])=>{
+    const inp = document.createElement('input');
+    inp.type  = 'hidden';
+    inp.name  = k;
+    inp.value = v;
+    form.appendChild(inp);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(()=>form.remove(), 3000);
+}
+
+function saveGsUrl(){
+  const url = document.getElementById('gsUrl').value.trim();
+  if(!url || !url.startsWith('https://')){
+    showGsSt('er','Enter a valid HTTPS URL.');return;
+  }
+  localStorage.setItem('gsUrl', url);
+  showGsSt('ok','✓ URL saved! Votes will be sent automatically on Final Submit.');
+}
+
+function testGs(){
+  const url = localStorage.getItem('gsUrl') || document.getElementById('gsUrl').value.trim();
+  if(!url){showGsSt('er','No URL saved. Paste and save the URL first.');return;}
+  showGsSt('inf','Sending test row to Google Sheet…');
+  getIframe();
+  const form = document.createElement('form');
+  form.method = 'POST';
+  form.action = url;
+  form.target = 'gsIframe';
+  form.style.display = 'none';
+  const fields = {voterId:'TEST-PING', category:'-- CONNECTION TEST --', candidate:'Test Entry', symbol:'TEST', cls:'TEST'};
+  Object.entries(fields).forEach(([k,v])=>{
+    const inp = document.createElement('input');
+    inp.type='hidden'; inp.name=k; inp.value=v;
+    form.appendChild(inp);
+  });
+  document.body.appendChild(form);
+  form.submit();
+  setTimeout(()=>{
+    form.remove();
+    showGsSt('ok','✅ Test row sent! Now open your Google Sheet and check the "Votes" tab — a row saying "-- CONNECTION TEST --" should appear within 5–10 seconds. If it appears, everything is working!');
+  }, 1000);
+}
+function showGsSt(type,msg){
+  const el=document.getElementById('gsSt');if(!el)return;
+  el.className='gsst '+type;el.textContent=msg;
+}
+function exportCSV(){
+  let csv='Category,Candidate,Symbol,Class,Votes,% of Category\n';
+  allCats.forEach(cat=>{
+    const list=candidates[cat];
+    const total=list.reduce((s,c)=>s+(voteCounts[c.id]||0),0);
+    list.forEach(c=>{
+      const v=voteCounts[c.id]||0;
+      const pct=total>0?Math.round((v/total)*100):0;
+      csv+=`"${catLabel[cat]}","${c.name}","${c.lbl}","${c.cls}","${v}","${pct}%"\n`;
+    });
+  });
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download='EdenElection2026_Results.csv';a.click();
+}
+function copyScript(){
+  navigator.clipboard.writeText(document.getElementById('scode').textContent)
+    .then(()=>showToast('Script copied!'));
+}
+
+// ══════════════════════════════════
+// TOAST
+// ══════════════════════════════════
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2200);
+}
+
+// ══════════════════════════════════
+// RESET ALL VOTES
+// ══════════════════════════════════
+function openResetConfirm(){
+  document.getElementById('resetModal').classList.add('on');
+}
+function doResetAll(){
+  // Clear all persistent data
+  localStorage.removeItem('egsVC');
+  localStorage.removeItem('egsVoterCount');
+  voteCounts = {};
+  voterCount = 0;
+  // Close modal
+  document.getElementById('resetModal').classList.remove('on');
+  // Rebuild results to show zeros
+  buildAdmResults();
+  showToast('✓ All votes have been reset to zero');
+}
+
+// ══════════════════════════════════
+// INIT
+// ══════════════════════════════════
+window.addEventListener('load',()=>{
+  renderStep();
+  document.getElementById('pcModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
+  document.getElementById('resetModal').addEventListener('click',function(e){if(e.target===this)this.classList.remove('on');});
+  // Long-press crest = admin shortcut
+  let pt;
+  const cr=document.getElementById('crest');
+  cr.addEventListener('mousedown',()=>{pt=setTimeout(()=>openAdmin('results'),3000);});
+  cr.addEventListener('mouseup',()=>clearTimeout(pt));
+  cr.addEventListener('mouseleave',()=>clearTimeout(pt));
+  cr.addEventListener('touchstart',()=>{pt=setTimeout(()=>openAdmin('results'),3000);},{passive:true});
+  cr.addEventListener('touchend',()=>clearTimeout(pt));
+});
+</script>
+</body>
+</html>
